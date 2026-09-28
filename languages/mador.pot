@@ -1,0 +1,111 @@
+# Mador — translation template.
+# Copyright (C) 2026 Khlumen
+# This file is distributed under the GPL-2.0-or-later license.
+msgid ""
+msgstr ""
+"Project-Id-Version: Mador 1.0.0\n"
+"Report-Msgid-Bugs-To: https://mador.ai\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Domain: mador\n"
+
+#: mador.php
+msgid "Settings"
+msgstr ""
+
+#: inc/badge.php
+msgid "Mador: enter your report code in Settings → Mador. Only administrators see this notice."
+msgstr ""
+
+#: inc/impostazioni.php
+msgid "Report code"
+msgstr ""
+
+#: inc/impostazioni.php
+msgid "Language"
+msgstr ""
+
+#: inc/impostazioni.php
+msgid "The ten characters at the end of your report address: mador.ai/r/XXXXXXXXXX. You can paste the whole address — the plugin keeps the code."
+msgstr ""
+
+#: inc/impostazioni.php
+msgid "Italian"
+msgstr ""
+
+#: inc/impostazioni.php
+msgid "English"
+msgstr ""
+
+#: inc/impostazioni.php
+msgid "Spanish"
+msgstr ""
+
+#: inc/impostazioni.php
+msgid "The language of the certificate: the page the badge links to, and the one the shortcode embeds. The badge image itself stays in Italian, like the brand."
+msgstr ""
+
+#: inc/impostazioni.php
+msgid "That does not look like a report code: ten characters, letters and digits, without “0”, “1”, “i”, “l” or “o”."
+msgstr ""
+
+#: inc/impostazioni.php
+msgid "What the plugin is doing"
+msgstr ""
+
+#: inc/impostazioni.php
+msgid "Enter the report code above: until then the plugin adds nothing to the site."
+msgstr ""
+
+#: inc/impostazioni.php
+msgid "Badge"
+msgstr ""
+
+#: inc/impostazioni.php
+msgid "If you see no image here, the code is wrong or the measurement is not published yet."
+msgstr ""
+
+#: inc/impostazioni.php
+msgid "Paste this where you want the badge:"
+msgstr ""
+
+#: inc/impostazioni.php
+msgid "Certificate"
+msgstr ""
+
+#: inc/impostazioni.php
+msgid "Paste this where you want the full certificate:"
+msgstr ""
+
+#: inc/impostazioni.php
+msgid "It embeds this page:"
+msgstr ""
+
+#: inc/impostazioni.php
+msgid "Verification tag"
+msgstr ""
+
+#: inc/impostazioni.php
+msgid "This tag is already in the head of every page of this site. Leave it there: it is how Mador checks that this site is yours."
+msgstr ""
+
+#: inc/faq.php
+msgid "Mador: there are no questions and answers to show yet. They appear once the article is published on Mador. Only administrators see this notice."
+msgstr ""
+
+#: inc/impostazioni.php
+msgid "Questions and answers"
+msgstr ""
+
+#: inc/impostazioni.php
+msgid "Paste this on the page that should carry your questions and answers:"
+msgstr ""
+
+#: inc/impostazioni.php
+msgid "It shows nothing until the article is published on Mador and the questions and answers are written. Then it appears on its own."
+msgstr ""
+
+#. Plugin description (header of mador.php)
+msgid "Connects your WordPress site to Mador: the site verification tag, your questions and answers with FAQ structured data, the measurement badge and the certificate."
+msgstr ""

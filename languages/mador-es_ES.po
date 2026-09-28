@@ -1,0 +1,85 @@
+# Mador — español.
+msgid ""
+msgstr ""
+"Project-Id-Version: Mador 1.0.0\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: es\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Domain: mador\n"
+
+msgid "Settings"
+msgstr "Ajustes"
+
+msgid "Mador: enter your report code in Settings → Mador. Only administrators see this notice."
+msgstr "Mador: introduce el código del informe en Ajustes → Mador. Este aviso solo lo ven los administradores."
+
+msgid "Report code"
+msgstr "Código del informe"
+
+msgid "Language"
+msgstr "Idioma"
+
+msgid "The ten characters at the end of your report address: mador.ai/r/XXXXXXXXXX. You can paste the whole address — the plugin keeps the code."
+msgstr "Los diez caracteres del final de la dirección de tu informe: mador.ai/r/XXXXXXXXXX. Puedes pegar la dirección entera: el plugin se queda con el código."
+
+msgid "Italian"
+msgstr "Italiano"
+
+msgid "English"
+msgstr "Inglés"
+
+msgid "Spanish"
+msgstr "Español"
+
+msgid "The language of the certificate: the page the badge links to, and the one the shortcode embeds. The badge image itself stays in Italian, like the brand."
+msgstr "El idioma del certificado: la página a la que lleva el distintivo y la que incrusta el shortcode. La imagen del distintivo se queda en italiano, como la marca."
+
+msgid "That does not look like a report code: ten characters, letters and digits, without “0”, “1”, “i”, “l” or “o”."
+msgstr "Esto no parece un código de informe: diez caracteres, letras y cifras, sin “0”, “1”, “i”, “l” ni “o”."
+
+msgid "What the plugin is doing"
+msgstr "Qué está haciendo el plugin"
+
+msgid "Enter the report code above: until then the plugin adds nothing to the site."
+msgstr "Introduce arriba el código del informe: hasta entonces el plugin no añade nada a la web."
+
+msgid "Badge"
+msgstr "Distintivo"
+
+msgid "If you see no image here, the code is wrong or the measurement is not published yet."
+msgstr "Si aquí no aparece ninguna imagen, el código es incorrecto o la medición aún no está publicada."
+
+msgid "Paste this where you want the badge:"
+msgstr "Pega esto donde quieras el distintivo:"
+
+msgid "Certificate"
+msgstr "Certificado"
+
+msgid "Paste this where you want the full certificate:"
+msgstr "Pega esto donde quieras el certificado entero:"
+
+msgid "It embeds this page:"
+msgstr "Incrusta esta página:"
+
+msgid "Verification tag"
+msgstr "Etiqueta de verificación"
+
+msgid "This tag is already in the head of every page of this site. Leave it there: it is how Mador checks that this site is yours."
+msgstr "Esta etiqueta ya está en la cabecera de todas las páginas de esta web. Déjala ahí: así es como Mador comprueba que la web es tuya."
+
+msgid "Mador: there are no questions and answers to show yet. They appear once the article is published on Mador. Only administrators see this notice."
+msgstr "Mador: todavía no hay preguntas y respuestas que mostrar. Aparecen cuando el artículo está publicado en Mador. Este aviso solo lo ven los administradores."
+
+msgid "Questions and answers"
+msgstr "Preguntas y respuestas"
+
+msgid "Paste this on the page that should carry your questions and answers:"
+msgstr "Pega esto en la página que debe llevar tus preguntas y respuestas:"
+
+msgid "It shows nothing until the article is published on Mador and the questions and answers are written. Then it appears on its own."
+msgstr "No muestra nada hasta que el artículo esté publicado en Mador y las preguntas y respuestas estén escritas. Después aparece solo."
+
+msgid "Connects your WordPress site to Mador: the site verification tag, your questions and answers with FAQ structured data, the measurement badge and the certificate."
+msgstr "Conecta tu sitio WordPress a Mador: la etiqueta de verificación del sitio, tus preguntas y respuestas con datos estructurados FAQ, el distintivo de la medición y el certificado."

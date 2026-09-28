@@ -1,0 +1,7 @@
+* text=auto eol=lf
+*.mo binary
+
+# Not shipped in the release zip (git archive).
+/.gitattributes export-ignore
+/README.md export-ignore
+/tools export-ignore
