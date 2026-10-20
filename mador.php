@@ -3,7 +3,7 @@
  * Plugin Name:       Mador
  * Plugin URI:        https://mador.ai/plugin
  * Description:       Connects your WordPress site to Mador: the site verification tag, your questions and answers with FAQ structured data, the measurement badge and the certificate.
- * Version:           1.0.0
+ * Version:           1.1.0
  * Requires at least: 6.0
  * Requires PHP:      7.4
  * Author:            Khlumen
@@ -22,7 +22,8 @@
  * 1. `<meta name="mador-verifica">` in the head of every page, so Mador can
  *    check that the site belongs to the account that declared it;
  * 2. `[mador-faq]`: the business's questions and answers, read from
- *    `/api/pubblicazioni/{code}.json`, with FAQPage structured data;
+ *    `/api/pubblicazioni/{code}.json`, with FAQPage structured data (the
+ *    credit link under them is off unless turned on in the settings);
  * 3. `[mador-badge]`: the measurement badge (an `<img>` inside an `<a>`);
  * 4. `[mador-certificato]`: the measurement certificate (an `<iframe>`).
  *
@@ -35,7 +36,7 @@
 defined( 'ABSPATH' ) || exit;
 
 /** Plugin version. Keep in sync with the header above and `readme.txt`. */
-define( 'MADOR_VERSIONE', '1.0.0' );
+define( 'MADOR_VERSIONE', '1.1.0' );
 
 /** Main plugin file, for `plugin_basename()`. */
 define( 'MADOR_FILE', __FILE__ );
@@ -61,15 +62,10 @@ if ( is_admin() ) {
 }
 
 /*
- * Admin translations. Loaded on `init`: since WordPress 6.7 a translation
- * call before `init` triggers `_doing_it_wrong()`.
+ * Admin translations need no loading call: WordPress loads the `mador`
+ * text domain on demand, from the language packs of WordPress.org and
+ * from `languages/` (the `Domain Path` above).
  */
-add_action(
-	'init',
-	static function () {
-		load_plugin_textdomain( 'mador', false, dirname( plugin_basename( MADOR_FILE ) ) . '/languages' );
-	}
-);
 
 /* The "Settings" link in the plugin row. */
 add_filter(

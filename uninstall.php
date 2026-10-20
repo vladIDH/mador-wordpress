@@ -2,7 +2,7 @@
 /**
  * Uninstall: removes everything the plugin stored.
  *
- * - the `mador_opzioni` option (report code and language);
+ * - the `mador_opzioni` option (report code, language, credit link);
  * - the `mador_faq_*` transients that cache the questions and answers.
  *
  * On multisite the option and the transients live per site, and
@@ -26,6 +26,10 @@ function mador_uninstall_site() {
 
 	delete_option( 'mador_opzioni' );
 
+	// A direct query because there is no API to list transients by prefix;
+	// the rows are then deleted through the API, and nothing is cached
+	// because the plugin is being removed.
+	// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
 	$names = $wpdb->get_col(
 		$wpdb->prepare(
 			"SELECT option_name FROM {$wpdb->options} WHERE option_name LIKE %s",

@@ -19,6 +19,8 @@ add_shortcode( 'mador-badge', 'mador_badge_shortcode' );
  *
  * Without attributes the settings apply. The attributes are for a site
  * that shows more than one business, or another language.
+ *
+ * @param array|string $attributi Shortcode attributes; an empty string when there are none.
  */
 function mador_badge_shortcode( $attributi ): string {
 	$a = shortcode_atts(

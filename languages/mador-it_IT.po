@@ -1,7 +1,7 @@
 # Mador — italiano.
 msgid ""
 msgstr ""
-"Project-Id-Version: Mador 1.0.0\n"
+"Project-Id-Version: Mador 1.1.0\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -20,6 +20,15 @@ msgstr "Codice del report"
 
 msgid "Language"
 msgstr "Lingua"
+
+msgid "Credit link"
+msgstr "Link alla fonte"
+
+msgid "Show a “Measured and written with Mador” link under the questions and answers"
+msgstr "Mostra il link «Misurato e scritto con Mador» sotto le domande e risposte"
+
+msgid "Off by default. When on, a small nofollow link to the page on Mador your questions and answers come from appears under the [mador-faq] block. The plugin adds no other link to your site on its own: the badge and the certificate appear only where you place their shortcodes."
+msgstr "Spento finché non lo accendi. Quando è acceso, sotto il blocco [mador-faq] compare un piccolo link nofollow alla pagina di Mador da cui vengono le tue domande e risposte. Da solo il plugin non aggiunge altri link al tuo sito: il badge e il certificato compaiono solo dove metti i loro shortcode."
 
 msgid "The ten characters at the end of your report address: mador.ai/r/XXXXXXXXXX. You can paste the whole address — the plugin keeps the code."
 msgstr "I dieci caratteri in fondo all'indirizzo del tuo report: mador.ai/r/XXXXXXXXXX. Puoi incollare l'indirizzo intero — il plugin tiene il codice."

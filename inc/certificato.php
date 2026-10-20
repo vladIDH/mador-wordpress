@@ -24,6 +24,8 @@ add_shortcode( 'mador-certificato', 'mador_certificato_shortcode' );
 /**
  * `[mador-certificato]` · `[mador-certificato altezza="1800"]` ·
  * `[mador-certificato codice="abcdefghjk" lingua="en"]`
+ *
+ * @param array|string $attributi Shortcode attributes; an empty string when there are none.
  */
 function mador_certificato_shortcode( $attributi ): string {
 	$a = shortcode_atts(

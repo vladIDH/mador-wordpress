@@ -4,7 +4,7 @@ Tags: ai, faq, structured data, verification, badge
 Requires at least: 6.0
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 1.0.0
+Stable tag: 1.1.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -17,37 +17,49 @@ Connects your site to Mador: site verification, your questions and answers with 
 It does four things, and nothing else:
 
 * **Site verification.** It adds `<meta name="mador-verifica">` to the head of every page, so Mador can confirm the site belongs to your account. Nothing to paste.
-* **Questions and answers.** `[mador-faq]` prints the questions and answers written for your business, with `FAQPage` structured data and a link to your page on Mador. They update on their own when you correct them in the Mador area.
+* **Questions and answers.** `[mador-faq]` prints the questions and answers written for your business, with `FAQPage` structured data. They update on their own when you correct them in the Mador area.
 * **Badge.** `[mador-badge]` shows your latest measurement, linking to the certificate.
 * **Certificate.** `[mador-certificato]` embeds the full measurement certificate.
 
-No API key, no account password, no tracking, no JavaScript, no stylesheets, no external libraries. The only setting is your report code, which is already public.
+No API key, no account password, no tracking, no JavaScript, no stylesheets, no external libraries. The only setting that identifies anything is your report code, which is already public.
+
+The plugin adds no links to your public pages on its own. The badge and the certificate appear only where you place their shortcodes. The "Measured and written with Mador" credit link under the questions and answers is off until you turn it on in **Settings → Mador**.
+
+The plugin needs a Mador account: it shows what Mador has measured and written for your business. See the "External services" section below for what it exchanges with mador.ai.
 
 The admin screens are in English, Italian and Spanish. What visitors see follows the language you choose in the settings (Italian, English or Spanish).
 
 == Installation ==
 
-1. Download the plugin from [mador.ai/plugin](https://mador.ai/plugin).
-2. In WordPress: **Plugins → Add New Plugin → Upload Plugin**, choose the zip file, **Install Now**, then **Activate**.
-3. Go to **Settings → Mador**, paste your report code (the ten characters at the end of your report address, `mador.ai/r/XXXXXXXXXX`; the whole address works too), pick the language and save.
-4. In the Mador area, under "Connect your site", press **Check the meta tag**: the tag is already on every page.
-5. On the page that should carry your questions and answers, add a **Shortcode** block with `[mador-faq]`.
-6. Optional: `[mador-badge]` where the badge belongs (the footer is the usual spot), `[mador-certificato]` on the page that should carry the certificate.
+1. In WordPress: **Plugins → Add New Plugin**, search for "Mador", **Install Now**, then **Activate**. You can also upload the zip from [mador.ai/plugin](https://mador.ai/plugin) with **Upload Plugin**.
+2. Go to **Settings → Mador**, paste your report code (the ten characters at the end of your report address, `mador.ai/r/XXXXXXXXXX`; the whole address works too), pick the language and save.
+3. In the Mador area, under "Connect your site", press **Check the meta tag**: the tag is already on every page.
+4. On the page that should carry your questions and answers, add a **Shortcode** block with `[mador-faq]`.
+5. Optional: `[mador-badge]` where the badge belongs (the footer is the usual spot), `[mador-certificato]` on the page that should carry the certificate.
+6. Optional: tick **Credit link** in the settings if you want the "Measured and written with Mador" link under the questions and answers.
 
 = Shortcode attributes =
 
 Without attributes, the settings apply.
 
-* `[mador-badge larghezza="180"]` — badge width in pixels (60–1000).
-* `[mador-certificato altezza="1800"]` — certificate height in pixels (300–5000).
-* `[mador-faq titolo="no"]` — without the section heading.
-* `codice="..."` and `lingua="it|en|es"` on any of the three — for a site that shows more than one business or another language.
+* `[mador-badge larghezza="180"]`: badge width in pixels (60 to 1000).
+* `[mador-certificato altezza="1800"]`: certificate height in pixels (300 to 5000).
+* `[mador-faq titolo="no"]`: without the section heading.
+* `codice="..."` and `lingua="it|en|es"` on any of the three: for a site that shows more than one business or another language.
 
 == Frequently Asked Questions ==
+
+= Do I need a Mador account? =
+
+Yes. The plugin shows on your site what Mador measured and wrote for your business: without a report code it adds nothing to the site.
 
 = Where do I find the report code? =
 
 At the end of the report address Mador sent you: `mador.ai/r/XXXXXXXXXX`. Ten characters. You can paste the whole address: the plugin keeps the code.
+
+= Does the plugin add links to my site? =
+
+Only where you ask for them. The badge links to your certificate, and the certificate has an "Open the certificate" link, but both appear only where you place their shortcodes. The credit link under the questions and answers is off by default; you can turn it on in **Settings → Mador**. When on, it is marked `nofollow`.
 
 = Why does `[mador-faq]` show nothing? =
 
@@ -61,23 +73,41 @@ No. The badge image is generated by Mador and cached for a day, so it always sho
 
 No. It adds one `<meta>` tag; the badge and the certificate load lazily, and only where you put them. The questions and answers are fetched from the server and kept for a day.
 
+= What happens when I delete the plugin? =
+
+It removes its settings and its cached questions and answers, on every site of a network.
+
 = My site is not on WordPress. =
 
 You can connect it by hand, or send the instructions to whoever manages it, from the Mador area.
 
 = Where is the source code? =
 
-On GitHub. Issues and pull requests are welcome.
+On GitHub: [github.com/vladIDH/mador-wordpress](https://github.com/vladIDH/mador-wordpress). Issues and pull requests are welcome.
 
 == External services ==
 
-This plugin connects to Mador (https://mador.ai), the service it belongs to. It does not work without it.
+This plugin connects to Mador (https://mador.ai), the service it belongs to and is operated by Khlumen. It does not work without it. The plugin contacts mador.ai only in the cases below, and only once a report code is saved in **Settings → Mador**.
 
-* **Questions and answers** (`[mador-faq]`): when a page with the shortcode is rendered and nothing is cached, your server requests `https://mador.ai/api/pubblicazioni/{report code}.json`. The request carries the report code and the plugin version in the user agent; it sends no personal data, no visitor data and nothing else about your site. The answer is cached for a day (five minutes after a failure).
-* **Badge** (`[mador-badge]`) and **certificate** (`[mador-certificato]`): the visitor's browser loads the image `https://mador.ai/r/{report code}/badge.svg` and the page `https://mador.ai/r/{report code}/certificato` (in an iframe). Like any image or embedded page, this sends the visitor's IP address and browser details to mador.ai.
+* **Questions and answers** (`[mador-faq]`): when a page with the shortcode is rendered and nothing is cached, your server requests `https://mador.ai/api/pubblicazioni/{report code}.json`. The request carries the report code in the address and the plugin version in the user agent; it sends no personal data, no visitor data and nothing else about your site. The answer is cached for a day (five minutes after a failure).
+* **Badge** (`[mador-badge]`) and **certificate** (`[mador-certificato]`): on the pages where you place them, the visitor's browser loads the image `https://mador.ai/r/{report code}/badge.svg` and the page `https://mador.ai/r/{report code}/certificato` (in an iframe). Like any image or embedded page, this sends the visitor's IP address, browser details and the address of the page to mador.ai.
+* **Settings page**: **Settings → Mador** shows your real badge, so the administrator's browser loads `https://mador.ai/r/{report code}/badge.svg` while that page is open, with the same details as above.
 * **Verification**: the meta tag is read by Mador when you press the verify button in the Mador area; the plugin itself sends nothing.
+
+Mador terms of service: https://mador.ai/en/termini
+Mador privacy policy: https://mador.ai/en/privacy
 
 == Changelog ==
 
+= 1.1.0 =
+* The "Measured and written with Mador" link under `[mador-faq]` is now optional and off by default: turn it on under **Settings → Mador → Credit link**.
+* Translations load through WordPress (language packs and the bundled `languages/` folder), without a manual loading call.
+* readme: external services, privacy policy and terms of service; code documentation brought to the WordPress coding standards.
+
 = 1.0.0 =
 * First public release: site verification tag, `[mador-faq]` with FAQPage structured data, `[mador-badge]`, `[mador-certificato]`, settings page in English, Italian and Spanish, full cleanup on uninstall.
+
+== Upgrade Notice ==
+
+= 1.1.0 =
+The credit link under the questions and answers is now off by default. Turn it on under Settings → Mador if you want to keep it.

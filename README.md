@@ -19,6 +19,11 @@ help them name it. This plugin brings that work onto the business's own site.
 | Badge | `[mador-badge]` → `<a><img></a>` pointing to `/r/{code}/badge.svg` |
 | Certificate | `[mador-certificato]` → `<iframe>` on `/r/{code}/certificato` |
 
+No links on the public site unless the administrator places them: the badge
+and the certificate appear only where their shortcodes are, and the
+"Measured and written with Mador" credit link under `[mador-faq]` is off until
+**Settings → Mador → Credit link** is ticked (WordPress.org guideline 10).
+
 What it does **not** do: no API keys or secrets, no JavaScript, no
 stylesheets, no tracking, no dependencies (no Composer, no build step). The
 only setting that identifies anything is the report code, which is already
@@ -43,6 +48,8 @@ Requires WordPress 6.0+ and PHP 7.4+. Tested up to WordPress 7.1.
 3. Add a **Shortcode** block with `[mador-faq]` on the page that should carry
    your questions and answers. It fills in once your article is published on
    Mador, and updates on its own.
+   Tick **Credit link** in the settings if you want the "Measured and written
+   with Mador" link under it.
 4. Optional: `[mador-badge]` (usually in the footer) and `[mador-certificato]`.
 
 ### Shortcode attributes
@@ -86,6 +93,15 @@ define( 'MADOR_ORIGINE', 'https://your-mador-instance.example' );
 
 When switching between cases, clear the FAQ cache:
 `delete_transient( 'mador_faq_' . $code )`.
+
+## Checks
+
+Before a release, both must come back clean:
+
+```
+phpcs --standard=WordPress,PHPCompatibilityWP --runtime-set testVersion 7.4-   --runtime-set text_domain mador --runtime-set prefixes mador   --extensions=php --ignore=tools .
+wp plugin check mador     # Plugin Check, on a site with the plugin installed
+```
 
 ## Uninstall
 

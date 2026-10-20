@@ -3,8 +3,9 @@
  * Questions and answers: `[mador-faq]`.
  *
  * Reads `/api/pubblicazioni/{code}.json` from Mador and prints the
- * business's questions and answers, with FAQPage structured data and a
- * link to the Mador page they come from.
+ * business's questions and answers, with FAQPage structured data. A link
+ * to the Mador page they come from follows only if the administrator turns
+ * it on in the settings: off by default.
  *
  * This is the only part of the plugin that calls Mador from the server: a
  * public, read-only GET, with no key and nothing sent but the request.
@@ -39,6 +40,8 @@ add_shortcode( 'mador-faq', 'mador_faq_shortcode' );
 /**
  * `[mador-faq]` · `[mador-faq codice="abcdefghjk" lingua="en"]` ·
  * `[mador-faq titolo="no"]`
+ *
+ * @param array|string $attributi Shortcode attributes; an empty string when there are none.
  */
 function mador_faq_shortcode( $attributi ): string {
 	$a = shortcode_atts(
@@ -79,12 +82,15 @@ function mador_faq_shortcode( $attributi ): string {
 		? ''
 		: sprintf( '<h2>%s</h2>', esc_html( mador_testo( 'faq_titolo', $lingua ) ) );
 
-	// `nofollow`: a link from a customer to their supplier.
-	$link = sprintf(
-		'<p class="mador-faq-fonte"><a href="%s" rel="nofollow noopener" target="_blank">%s</a></p>',
-		esc_url( $dati['url'] ),
-		esc_html( mador_testo( 'faq_fonte', $lingua ) )
-	);
+	// The credit link, only when turned on in the settings. `nofollow`: a
+	// link from a customer to their supplier.
+	$link = mador_fonte()
+		? sprintf(
+			'<p class="mador-faq-fonte"><a href="%s" rel="nofollow noopener" target="_blank">%s</a></p>',
+			esc_url( $dati['url'] ),
+			esc_html( mador_testo( 'faq_fonte', $lingua ) )
+		)
+		: '';
 
 	return sprintf(
 		'<section class="mador-faq">%s<dl>%s</dl>%s</section>%s',
@@ -100,6 +106,8 @@ function mador_faq_shortcode( $attributi ): string {
  *
  * `JSON_HEX_TAG` and `JSON_HEX_AMP` encode `<` and `&`, so an answer that
  * contains `</script>` cannot close the tag early.
+ *
+ * @param array $dati What `mador_faq_dati()` returned.
  */
 function mador_faq_schema( array $dati ): string {
 	$domande = array();
@@ -132,6 +140,9 @@ function mador_faq_schema( array $dati ): string {
  * Cached in a transient keyed by code (a site may show more than one
  * business). A failure is cached as the empty string, because
  * `get_transient()` returns `false` both for "missing" and for `false`.
+ *
+ * @param string $codice The report code.
+ * @return array|null
  */
 function mador_faq_dati( string $codice ) {
 	$chiave   = 'mador_faq_' . $codice;
@@ -159,6 +170,9 @@ function mador_faq_dati( string $codice ) {
  *
  * The shape is validated, not just the status code: a proxy or a hosting
  * error page can answer 200 with HTML in it. The link must point to Mador.
+ *
+ * @param string $codice The report code.
+ * @return array|null
  */
 function mador_faq_scarica( string $codice ) {
 	$risposta = wp_remote_get(
@@ -205,6 +219,8 @@ function mador_faq_scarica( string $codice ) {
 /**
  * Whether a URL is an http(s) address on Mador: the configured origin, or
  * mador.ai itself.
+ *
+ * @param string $url The address to check.
  */
 function mador_url_di_mador( string $url ): bool {
 	$schema = wp_parse_url( $url, PHP_URL_SCHEME );

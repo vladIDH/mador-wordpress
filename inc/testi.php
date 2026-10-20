@@ -37,6 +37,7 @@ function mador_testi(): array {
 			'es' => 'Preguntas frecuentes',
 		),
 		// Same attribution Mador prints under the block copied by hand.
+		// Shown only when the credit link is turned on in the settings.
 		'faq_fonte'          => array(
 			'it' => 'Misurato e scritto con Mador',
 			'en' => 'Measured and written with Mador',
@@ -45,7 +46,12 @@ function mador_testi(): array {
 	);
 }
 
-/** A public string in the chosen language, falling back to Italian. */
+/**
+ * A public string in the chosen language, falling back to Italian.
+ *
+ * @param string $chiave Key in `mador_testi()`.
+ * @param string $lingua One of `MADOR_LINGUE`.
+ */
 function mador_testo( string $chiave, string $lingua ): string {
 	$testi = mador_testi();
 	if ( ! isset( $testi[ $chiave ] ) ) {

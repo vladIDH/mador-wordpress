@@ -1,10 +1,11 @@
 <?php
 /**
- * Settings → Mador: two fields (report code, language), and a panel that
+ * Settings → Mador: three fields (report code, language, credit link), and
+ * a panel that
  * shows what the plugin is doing with them — the real badge, the
  * verification tag, the shortcodes to copy.
  *
- * Under Settings and not in a top-level menu: a plugin with two fields
+ * Under Settings and not in a top-level menu: a plugin with three fields
  * does not need a place in the sidebar.
  *
  * The form goes through the Settings API: `settings_fields()` prints the
@@ -34,6 +35,7 @@ add_action(
 
 add_action( 'admin_init', 'mador_registra_impostazioni' );
 
+/** Registers the option, the section and the fields. */
 function mador_registra_impostazioni(): void {
 	register_setting(
 		MADOR_GRUPPO,
@@ -44,6 +46,7 @@ function mador_registra_impostazioni(): void {
 			'default'           => array(
 				'codice' => '',
 				'lingua' => 'it',
+				'fonte'  => false,
 			),
 		)
 	);
@@ -66,6 +69,15 @@ function mador_registra_impostazioni(): void {
 		'mador',
 		'mador_sezione',
 		array( 'label_for' => 'mador_lingua' )
+	);
+
+	add_settings_field(
+		'mador_fonte',
+		esc_html__( 'Credit link', 'mador' ),
+		'mador_campo_fonte',
+		'mador',
+		'mador_sezione',
+		array( 'label_for' => 'mador_fonte' )
 	);
 }
 
@@ -109,6 +121,27 @@ function mador_campo_lingua(): void {
 	);
 }
 
+/**
+ * The credit link field: a checkbox, off by default.
+ *
+ * WordPress.org does not let a plugin add links to the public site without
+ * the administrator's consent, so the link exists only once this is ticked.
+ * The badge and the certificate need no such switch: they appear only
+ * where the administrator places their shortcodes.
+ */
+function mador_campo_fonte(): void {
+	printf(
+		'<label for="mador_fonte"><input type="checkbox" id="mador_fonte" name="%1$s[fonte]" value="1"%2$s /> %3$s</label>',
+		esc_attr( MADOR_OPZIONE ),
+		checked( mador_fonte(), true, false ),
+		esc_html__( 'Show a “Measured and written with Mador” link under the questions and answers', 'mador' )
+	);
+	printf(
+		'<p class="description">%s</p>',
+		esc_html__( 'Off by default. When on, a small nofollow link to the page on Mador your questions and answers come from appears under the [mador-faq] block. The plugin adds no other link to your site on its own: the badge and the certificate appear only where you place their shortcodes.', 'mador' )
+	);
+}
+
 /** The page. */
 function mador_pagina_impostazioni(): void {
 	if ( ! current_user_can( 'manage_options' ) ) {
@@ -144,7 +177,12 @@ function mador_pagina_impostazioni(): void {
 	echo '</div>';
 }
 
-/** The "what the plugin is doing" panel: real badge, shortcodes, verification tag. */
+/**
+ * The "what the plugin is doing" panel: real badge, shortcodes, verification tag.
+ *
+ * @param string $codice The saved report code.
+ * @param string $lingua The saved language.
+ */
 function mador_riquadro_stato( string $codice, string $lingua ): void {
 	echo '<hr />';
 	printf( '<h2>%s</h2>', esc_html__( 'What the plugin is doing', 'mador' ) );
