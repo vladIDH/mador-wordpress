@@ -82,6 +82,40 @@ The script refuses to write the `.mo` files if a string in the code is missing
 from a `.po` file, a translation is empty, or a file carries a string the code
 no longer uses. `node tools/po-to-mo.mjs --check` only checks.
 
+### translate.wordpress.org
+
+Once the plugin is approved on WordPress.org (slug `mador`), its strings show
+up on translate.wordpress.org, and WordPress installs Italian and Spanish as
+language packs, ahead of the files in `languages/`. To carry the existing
+translations over instead of retyping them:
+
+1. Wait until the project exists:
+   `https://translate.wordpress.org/projects/wp-plugins/mador/`. It is created
+   from the plugin's SVN (`Stable tag`), usually within a day of the first
+   commit there.
+2. Log in as `khlumen` and open the locale's **Stable (latest release)**
+   sub-project:
+   - Italian: `https://translate.wordpress.org/projects/wp-plugins/mador/stable/it/default/`
+   - Spanish: `https://translate.wordpress.org/projects/wp-plugins/mador/stable/es/default/`
+3. At the bottom of the string list, **Import Translations**: choose
+   `languages/mador-it_IT.po` for Italian, `languages/mador-es_ES.po` for
+   Spanish, format **Portable Object Message Catalog (.po/.pot)**, **Import**.
+4. Without editor rights, the imported strings arrive as *waiting*
+   suggestions, and a locale's editors approve them. To approve them yourself,
+   ask to be Project Translation Editor (PTE) for `mador` in Italian and
+   Spanish, with a post on
+   [make.wordpress.org/polyglots](https://make.wordpress.org/polyglots/) (the
+   request template is pinned there), then import again: as PTE the strings go
+   in as *current*.
+5. The language pack is built once a locale's Stable sub-project reaches 90%
+   translated; with every string imported it is at 100%. The readme has its own
+   sub-project (**Stable Readme**): it is translated there, not from the
+   `.po` files.
+
+The `.po` files in `languages/` stay the source: change a string here first,
+compile with `node tools/po-to-mo.mjs`, release, then import the updated `.po`
+again.
+
 ## Testing against another Mador instance
 
 The plugin points to `https://mador.ai`. To point it elsewhere, in
