@@ -3,7 +3,7 @@
  * Plugin Name:       Mador
  * Plugin URI:        https://mador.ai/plugin
  * Description:       Connects your WordPress site to Mador: the site verification tag, your questions and answers with FAQ structured data, the measurement badge and the certificate.
- * Version:           1.1.0
+ * Version:           1.1.1
  * Requires at least: 6.0
  * Requires PHP:      7.4
  * Author:            Khlumen
@@ -11,7 +11,6 @@
  * License:           GPL-2.0-or-later
  * License URI:       https://www.gnu.org/licenses/gpl-2.0.html
  * Text Domain:       mador
- * Domain Path:       /languages
  *
  * @package Mador
  */
@@ -36,7 +35,7 @@
 defined( 'ABSPATH' ) || exit;
 
 /** Plugin version. Keep in sync with the header above and `readme.txt`. */
-define( 'MADOR_VERSIONE', '1.1.0' );
+define( 'MADOR_VERSIONE', '1.1.1' );
 
 /** Main plugin file, for `plugin_basename()`. */
 define( 'MADOR_FILE', __FILE__ );
@@ -63,8 +62,7 @@ if ( is_admin() ) {
 
 /*
  * Admin translations need no loading call: WordPress loads the `mador`
- * text domain on demand, from the language packs of WordPress.org and
- * from `languages/` (the `Domain Path` above).
+ * text domain on demand, from the language packs of translate.wordpress.org.
  */
 
 /* The "Settings" link in the plugin row. */

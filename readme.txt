@@ -4,7 +4,7 @@ Tags: ai, faq, structured data, verification, badge
 Requires at least: 6.0
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 1.1.0
+Stable tag: 1.1.1
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -27,7 +27,7 @@ The plugin adds no links to your public pages on its own. The badge and the cert
 
 The plugin needs a Mador account: it shows what Mador has measured and written for your business. See the "External services" section below for what it exchanges with mador.ai.
 
-The admin screens are in English, Italian and Spanish. What visitors see follows the language you choose in the settings (Italian, English or Spanish).
+The admin screens are in English, with Italian and Spanish on their way through the language packs of translate.wordpress.org. What visitors see follows the language you choose in the settings (Italian, English or Spanish).
 
 == Installation ==
 
@@ -98,6 +98,9 @@ Mador terms of service: https://mador.ai/en/termini
 Mador privacy policy: https://mador.ai/en/privacy
 
 == Changelog ==
+
+= 1.1.1 =
+* Translations now come only from translate.wordpress.org: the plugin no longer ships its own `languages/` folder.
 
 = 1.1.0 =
 * The "Measured and written with Mador" link under `[mador-faq]` is now optional and off by default: turn it on under **Settings → Mador → Credit link**.

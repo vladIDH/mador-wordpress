@@ -64,8 +64,10 @@ Requires WordPress 6.0+ and PHP 7.4+. Tested up to WordPress 7.1.
 ## Languages
 
 - **Admin screens** follow the WordPress language, through gettext:
-  `languages/mador.pot`, with Italian and Spanish included. English is the
-  source language.
+  the language packs of translate.wordpress.org. English is the source
+  language. The `.pot` and the Italian and Spanish `.po` files in
+  `languages/` are the source for those packs and are not shipped in the zip
+  (since 1.1.1).
 - **What visitors see** — the badge's `alt`, the certificate's title and link,
   the FAQ heading and attribution — follows the language chosen in the
   settings, because it sits next to content written in that language. Those
@@ -86,7 +88,7 @@ no longer uses. `node tools/po-to-mo.mjs --check` only checks.
 
 Once the plugin is approved on WordPress.org (slug `mador`), its strings show
 up on translate.wordpress.org, and WordPress installs Italian and Spanish as
-language packs, ahead of the files in `languages/`. To carry the existing
+language packs. To carry the existing
 translations over instead of retyping them:
 
 1. Wait until the project exists:
@@ -113,7 +115,7 @@ translations over instead of retyping them:
    `.po` files.
 
 The `.po` files in `languages/` stay the source: change a string here first,
-compile with `node tools/po-to-mo.mjs`, release, then import the updated `.po`
+check with `node tools/po-to-mo.mjs`, release, then import the updated `.po`
 again.
 
 ## Testing against another Mador instance
@@ -154,7 +156,7 @@ inc/faq.php        [mador-faq]
 inc/badge.php      [mador-badge]
 inc/certificato.php  [mador-certificato]
 inc/testi.php      visitor-facing strings
-languages/         .pot, it_IT, es_ES
+languages/         .pot, it_IT, es_ES (not shipped in the zip)
 tools/po-to-mo.mjs .po → .mo compiler and checker (not shipped in the zip)
 ```
 
