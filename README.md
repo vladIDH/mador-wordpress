@@ -153,8 +153,11 @@ The protocol is mirrored in Mador (`lib/wp/` in the geo-scan repository).
 
 ## Checks
 
-The publishing tests run with plain PHP (sodium needed; inside WordPress
-it is always there):
+The publishing tests run with plain PHP and the sodium extension. Inside
+WordPress the sodium functions are always there, from PHP or from the
+sodium_compat copy WordPress ships; the one exception is `sodium_memzero()`,
+which sodium_compat cannot do and throws, so the code calls it only when
+the native extension is loaded (a test checks this):
 
 ```
 php -d extension=sodium tests/run.php

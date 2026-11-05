@@ -73,7 +73,12 @@ function mador_riquadro_pubblica(): void {
 	printf( '<p class="description">%s</p>', esc_html__( 'Disconnecting leaves every published page on your site.', 'mador' ) );
 }
 
-/** Back to the settings page with a result. */
+/**
+ * Back to the settings page with a result.
+ *
+ * @param string $esito Result key for the admin notice.
+ * @return void
+ */
 function mador_torna( string $esito ): void {
 	wp_safe_redirect( add_query_arg( 'mador_esito', $esito, admin_url( 'options-general.php?page=mador' ) ) );
 	exit;

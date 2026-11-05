@@ -29,6 +29,13 @@ const MADOR_PERCORSO_SINCRONIZZA = '/api/wp/sincronizza';
  * The string the site signs for a request: method, path, timestamp, nonce
  * and the SHA-256 of the body, one per line. Must match `daFirmare()` in
  * Mador's `lib/wp/firma.ts` byte for byte.
+ *
+ * @param string $metodo   HTTP method.
+ * @param string $percorso Request path.
+ * @param int    $istante  Unix timestamp.
+ * @param string $nonce    One-time value.
+ * @param string $corpo    Request body, exactly as sent.
+ * @return string
  */
 function mador_da_firmare( string $metodo, string $percorso, int $istante, string $nonce, string $corpo ): string {
 	return implode( "\n", array( strtoupper( $metodo ), $percorso, (string) $istante, $nonce, hash( 'sha256', $corpo ) ) );
@@ -36,17 +43,22 @@ function mador_da_firmare( string $metodo, string $percorso, int $istante, strin
 
 /** A fresh nonce: 24 random bytes in base64url. */
 function mador_nonce(): string {
-	return rtrim( strtr( base64_encode( random_bytes( 24 ) ), '+/', '-_' ), '=' );
+	return rtrim( strtr( base64_encode( random_bytes( 24 ) ), '+/', '-_' ), '=' ); // phpcs:ignore WordPress.PHP.DiscouragedPHPFunctions.obfuscation_base64_encode -- random nonce bytes for transport, not code.
 }
 
 /**
  * The signature headers for a request, made with the site's secret key
  * (64 bytes, base64).
  *
+ * @param string $sito               Site id given by Mador.
+ * @param string $chiave_privata_b64 The site's secret key, base64.
+ * @param string $corpo              Request body, exactly as sent.
+ * @param int    $istante            Unix timestamp.
+ * @param string $nonce              One-time value.
  * @return array<string,string>
  */
 function mador_intestazioni_firmate( string $sito, string $chiave_privata_b64, string $corpo, int $istante, string $nonce ): array {
-	$segreta = base64_decode( $chiave_privata_b64, true );
+	$segreta = base64_decode( $chiave_privata_b64, true ); // phpcs:ignore WordPress.PHP.DiscouragedPHPFunctions.obfuscation_base64_decode -- Ed25519 secret key for transport, not code.
 	if ( false === $segreta || 64 !== strlen( $segreta ) ) {
 		return array();
 	}
@@ -59,7 +71,7 @@ function mador_intestazioni_firmate( string $sito, string $chiave_privata_b64, s
 		'X-Mador-Sito'    => $sito,
 		'X-Mador-Istante' => (string) $istante,
 		'X-Mador-Nonce'   => $nonce,
-		'X-Mador-Firma'   => base64_encode( $firma ),
+		'X-Mador-Firma'   => base64_encode( $firma ), // phpcs:ignore WordPress.PHP.DiscouragedPHPFunctions.obfuscation_base64_encode -- Ed25519 signature for transport, not code.
 	);
 }
 
@@ -74,7 +86,11 @@ function mador_intestazioni_firmate( string $sito, string $chiave_privata_b64, s
  *
  * Anything else returns null and nothing in it is looked at.
  *
- * @param mixed $busta Decoded JSON body.
+ * @param mixed  $busta            Decoded JSON body.
+ * @param string $chiave_mador_b64 Mador's public key, base64, received at connection time.
+ * @param string $kid              Key id received at connection time.
+ * @param string $sito             This site's id.
+ * @param int    $adesso           Current Unix timestamp.
  * @return array<string,mixed>|null
  */
 function mador_apri_busta( $busta, string $chiave_mador_b64, string $kid, string $sito, int $adesso ) {
@@ -87,8 +103,8 @@ function mador_apri_busta( $busta, string $chiave_mador_b64, string $kid, string
 	if ( ! hash_equals( $kid, $busta['kid'] ) ) {
 		return null;
 	}
-	$pubblica = base64_decode( $chiave_mador_b64, true );
-	$firma    = base64_decode( $busta['firma'], true );
+	$pubblica = base64_decode( $chiave_mador_b64, true ); // phpcs:ignore WordPress.PHP.DiscouragedPHPFunctions.obfuscation_base64_decode -- Ed25519 public key for transport, not code.
+	$firma    = base64_decode( $busta['firma'], true ); // phpcs:ignore WordPress.PHP.DiscouragedPHPFunctions.obfuscation_base64_decode -- Ed25519 signature for transport, not code.
 	if ( false === $pubblica || 32 !== strlen( $pubblica ) || false === $firma || 64 !== strlen( $firma ) ) {
 		return null;
 	}
@@ -109,7 +125,12 @@ function mador_apri_busta( $busta, string $chiave_mador_b64, string $kid, string
 	return $dati;
 }
 
-/** The fingerprint of a post body, to tell whether someone edited it. */
+/**
+ * The fingerprint of a post body, to tell whether someone edited it.
+ *
+ * @param string $contenuto Post content.
+ * @return string
+ */
 function mador_impronta( string $contenuto ): string {
 	return hash( 'sha256', str_replace( "\r\n", "\n", $contenuto ) );
 }
@@ -151,7 +172,9 @@ function mador_decidi( array $consegna, $post ): string {
  * plus this page's URL and id. `JSON_HEX_TAG` turns `<` and `>` into
  * `<` / `>`, so no value can close the script tag.
  *
- * @param mixed $schema Decoded `_mador_schema` meta.
+ * @param mixed  $schema Decoded `_mador_schema` meta.
+ * @param string $url    The page's permalink.
+ * @return string
  */
 function mador_schema_pagina( $schema, string $url ): string {
 	if ( ! is_array( $schema ) || ! isset( $schema['@graph'][0] ) || ! is_array( $schema['@graph'][0] ) ) {
@@ -159,6 +182,6 @@ function mador_schema_pagina( $schema, string $url ): string {
 	}
 	$schema['@graph'][0]['url'] = $url;
 	$schema['@graph'][0]['@id'] = $url . '#pagina';
-	$json                       = json_encode( $schema, JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE );
+	$json                       = wp_json_encode( $schema, JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE );
 	return false === $json ? '' : $json;
 }

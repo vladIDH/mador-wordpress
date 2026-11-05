@@ -57,6 +57,7 @@ function mador_sito() {
 /**
  * Connects the site with a one-time code from the Mador account.
  *
+ * @param string $codice One-time code shown in the Mador account.
  * @return true|string True, or a short reason for the admin notice.
  */
 function mador_collega( string $codice ) {
@@ -76,7 +77,7 @@ function mador_collega( string $codice ) {
 			'body'    => wp_json_encode(
 				array(
 					'codice'   => $codice,
-					'chiave'   => base64_encode( $pubblica ),
+					'chiave'   => base64_encode( $pubblica ), // phpcs:ignore WordPress.PHP.DiscouragedPHPFunctions.obfuscation_base64_encode -- Ed25519 public key for transport, not code.
 					'home'     => home_url( '/' ),
 					'versione' => MADOR_VERSIONE,
 				)
@@ -95,7 +96,7 @@ function mador_collega( string $codice ) {
 		MADOR_OPZIONE_SITO,
 		array(
 			'sito'         => sanitize_text_field( $dati['sito'] ),
-			'privata'      => base64_encode( $segreta ),
+			'privata'      => base64_encode( $segreta ), // phpcs:ignore WordPress.PHP.DiscouragedPHPFunctions.obfuscation_base64_encode -- Ed25519 secret key stored as text, not code.
 			'chiave_mador' => sanitize_text_field( $dati['chiave_mador'] ),
 			'kid'          => sanitize_text_field( $dati['kid'] ),
 			'utente'       => get_current_user_id(),
@@ -138,18 +139,34 @@ add_action( 'init', 'mador_pianifica' );
  * @return WP_Post[]
  */
 function mador_post_di_mador(): array {
-	return get_posts(
-		array(
-			'post_type'      => array( 'page', 'post' ),
-			'post_status'    => 'any,trash',
-			'meta_key'       => MADOR_META_ID, // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key
-			'posts_per_page' => 500,
-			'no_found_rows'  => true,
-		)
-	);
+	$tutti  = array();
+	$pagina = 1;
+	do {
+		$blocco = get_posts(
+			array(
+				'post_type'      => array( 'page', 'post' ),
+				'post_status'    => 'any,trash',
+				'meta_key'       => MADOR_META_ID, // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key
+				'posts_per_page' => 100,
+				'paged'          => $pagina,
+				'orderby'        => 'ID',
+				'order'          => 'ASC',
+				'no_found_rows'  => true,
+			)
+		);
+		$quanti = count( $blocco );
+		$tutti  = array_merge( $tutti, $blocco );
+		++$pagina;
+	} while ( 100 === $quanti && $pagina <= 50 );
+	return $tutti;
 }
 
-/** The post carrying a Mador page id, or null. */
+/**
+ * The post carrying a Mador page id, or null.
+ *
+ * @param string $id Mador page id.
+ * @return WP_Post|null
+ */
 function mador_post_per_id( string $id ) {
 	$trovati = get_posts(
 		array(
@@ -251,7 +268,12 @@ function mador_giro(): string {
 		}
 	}
 
-	$sito['ultimo_giro']  = time();
+	// "Last check with Mador" moves only on an answer that passed the
+	// signature check; a refused or missing answer keeps the previous date,
+	// and `ultimo_esito` carries the reason for the admin notice.
+	if ( 'ok' === $esito ) {
+		$sito['ultimo_giro'] = time();
+	}
 	$sito['ultimo_esito'] = $esito;
 	update_option( MADOR_OPZIONE_SITO, $sito, false );
 	delete_transient( 'mador_giro_in_corso' );

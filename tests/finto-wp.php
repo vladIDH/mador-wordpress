@@ -33,7 +33,8 @@ $GLOBALS['finto'] = array(
 );
 
 function finto_reset() {
-	$GLOBALS['finto'] = array(
+	$GLOBALS['finto_http'] = null;
+	$GLOBALS['finto']      = array(
 		'post'     => array(),
 		'meta'     => array(),
 		'opzioni'  => array(),
@@ -41,13 +42,38 @@ function finto_reset() {
 	);
 }
 
+// The HTTP answer `wp_remote_post()` returns: a callable, set by a test.
+$GLOBALS['finto_http'] = null;
+
+function get_transient( $k ) {
+	return isset( $GLOBALS['finto']['opzioni'][ '_t_' . $k ] ) ? $GLOBALS['finto']['opzioni'][ '_t_' . $k ] : false;
+}
+function set_transient( $k, $v ) {
+	$GLOBALS['finto']['opzioni'][ '_t_' . $k ] = $v;
+	return true;
+}
+function delete_transient( $k ) {
+	unset( $GLOBALS['finto']['opzioni'][ '_t_' . $k ] );
+	return true;
+}
+function wp_remote_post( $url, $args ) {
+	$f = $GLOBALS['finto_http'];
+	return $f ? $f( $url, $args ) : new WP_Error();
+}
+function wp_remote_retrieve_response_code( $r ) {
+	return is_array( $r ) ? $r['code'] : 0;
+}
+function wp_remote_retrieve_body( $r ) {
+	return is_array( $r ) ? $r['body'] : '';
+}
+
 function add_action() {}
 function add_filter() {}
 function is_wp_error( $x ) {
 	return $x instanceof WP_Error;
 }
-function wp_json_encode( $x ) {
-	return json_encode( $x );
+function wp_json_encode( $x, $flags = 0 ) {
+	return json_encode( $x, $flags );
 }
 function wp_slash( $x ) {
 	return addslashes( $x );

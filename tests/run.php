@@ -4,7 +4,8 @@
  *
  *     php -d extension=sodium tests/run.php
  *
- * (Inside WordPress sodium is always there, from PHP or sodium_compat.)
+ * (Inside WordPress the sodium functions are always there, from PHP or
+ * sodium_compat, except sodium_memzero(): see the test about it below.)
  * Exits 1 on the first failure count above zero.
  *
  * @package Mador
@@ -294,6 +295,70 @@ prova(
 			}
 		}
 		uguale( true, $viste > 0, 'nessuna sodium_memzero trovata: il test non guarda piu\' niente' );
+	}
+);
+
+prova(
+	"«Last check» solo con una risposta valida: una busta rifiutata lascia la data di prima",
+	function () {
+		$sito_kp  = sodium_crypto_sign_seed_keypair( str_repeat( chr( 3 ), 32 ) );
+		$mador_kp = sodium_crypto_sign_seed_keypair( str_repeat( chr( 4 ), 32 ) );
+		$altra_kp = sodium_crypto_sign_seed_keypair( str_repeat( chr( 5 ), 32 ) );
+		update_option(
+			MADOR_OPZIONE_SITO,
+			array(
+				'sito'         => 'sito-x',
+				'privata'      => base64_encode( sodium_crypto_sign_secretkey( $sito_kp ) ),
+				'chiave_mador' => base64_encode( sodium_crypto_sign_publickey( $mador_kp ) ),
+				'kid'          => 'k1',
+				'utente'       => 1,
+				'collegato_il' => 1000,
+				'ultimo_giro'  => 1000,
+				'ultimo_esito' => 'ok',
+			)
+		);
+		$busta = function ( $segreta ) {
+			$dati = wp_json_encode(
+				array(
+					'sito'     => 'sito-x',
+					'istante'  => time(),
+					'consegne' => array(),
+				)
+			);
+			return array(
+				'code' => 200,
+				'body' => wp_json_encode(
+					array(
+						'kid'   => 'k1',
+						'firma' => base64_encode( sodium_crypto_sign_detached( $dati, $segreta ) ),
+						'dati'  => $dati,
+					)
+				),
+			);
+		};
+
+		// Firmata da un'altra chiave: rifiutata, la data resta, l'esito dice perche'.
+		$GLOBALS['finto_http'] = function () use ( $busta, $altra_kp ) {
+			return $busta( sodium_crypto_sign_secretkey( $altra_kp ) );
+		};
+		uguale( 'firma', mador_giro() );
+		$s = get_option( MADOR_OPZIONE_SITO );
+		uguale( 1000, $s['ultimo_giro'], 'ultimo_giro dopo una busta rifiutata' );
+		uguale( 'firma', $s['ultimo_esito'] );
+
+		// Mador non raggiungibile: anche qui la data resta.
+		$GLOBALS['finto_http'] = null;
+		uguale( 'rete', mador_giro() );
+		uguale( 1000, get_option( MADOR_OPZIONE_SITO )['ultimo_giro'], 'ultimo_giro senza rete' );
+
+		// Firmata da Mador: valida, la data si aggiorna.
+		$GLOBALS['finto_http'] = function () use ( $busta, $mador_kp ) {
+			return $busta( sodium_crypto_sign_secretkey( $mador_kp ) );
+		};
+		uguale( 'ok', mador_giro() );
+		$s = get_option( MADOR_OPZIONE_SITO );
+		vero( $s['ultimo_giro'] >= time() - 5, 'ultimo_giro dopo una risposta valida' );
+		uguale( 'ok', $s['ultimo_esito'] );
 	}
 );
 
