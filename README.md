@@ -130,9 +130,37 @@ define( 'MADOR_ORIGINE', 'https://your-mador-instance.example' );
 When switching between cases, clear the FAQ cache:
 `delete_transient( 'mador_faq_' . $code )`.
 
+## Publishing pages (1.2.0)
+
+Off until the site owner pastes a one-time code (15 minutes, single use)
+from their Mador account into Settings → Mador. The plugin then creates an
+Ed25519 key pair: the secret half stays in the `mador_sito` option (not
+autoloaded), Mador receives only the public half. Once an hour, and when
+Mador rings `/wp-json/mador/v1/campanello`, the plugin sends a signed
+request to `/api/wp/sincronizza` with the state of its pages and receives
+an envelope signed by Mador with what to create, update or take down.
+
+- an envelope that does not verify, names another site or is older than
+  ten minutes is ignored entirely;
+- a page the owner edited is never overwritten without `forza`, which
+  Mador only sends after the owner chooses so in their account;
+- taking down = draft; nothing is ever deleted; uninstalling keeps posts;
+- `<meta name="mador-pagina">` and the structured data are printed only on
+  the posts the plugin wrote. Mador reads that mark before it points
+  Google to the page.
+
+The protocol is mirrored in Mador (`lib/wp/` in the geo-scan repository).
+
 ## Checks
 
-Before a release, both must come back clean:
+The publishing tests run with plain PHP (sodium needed; inside WordPress
+it is always there):
+
+```
+php -d extension=sodium tests/run.php
+```
+
+Before a release, these must come back clean:
 
 ```
 phpcs --standard=WordPress,PHPCompatibilityWP --runtime-set testVersion 7.4-   --runtime-set text_domain mador --runtime-set prefixes mador   --extensions=php --ignore=tools .
@@ -141,8 +169,10 @@ wp plugin check mador     # Plugin Check, on a site with the plugin installed
 
 ## Uninstall
 
-Deleting the plugin removes its option (`mador_opzioni`) and its cached
-questions and answers (`mador_faq_*` transients), on every site of a network.
+Deleting the plugin removes its options (`mador_opzioni`, `mador_sito`,
+`mador_assenti`), its hourly event and its cached questions and answers
+(`mador_faq_*` transients), on every site of a network. Pages and posts it
+published stay: they belong to the site owner.
 
 ## Files
 
@@ -156,6 +186,10 @@ inc/faq.php        [mador-faq]
 inc/badge.php      [mador-badge]
 inc/certificato.php  [mador-certificato]
 inc/testi.php      visitor-facing strings
+inc/protocollo.php signatures and decisions for publishing (pure)
+inc/pubblica.php   publishing: connect, hourly round, apply, head, doorbell
+inc/pubblica-admin.php  the publishing box in Settings → Mador
+tests/             php tests/run.php (not shipped in the zip)
 languages/         .pot, it_IT, es_ES (not shipped in the zip)
 tools/po-to-mo.mjs .po → .mo compiler and checker (not shipped in the zip)
 ```

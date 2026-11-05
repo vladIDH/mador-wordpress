@@ -3,7 +3,12 @@
  * Uninstall: removes everything the plugin stored.
  *
  * - the `mador_opzioni` option (report code, language, credit link);
- * - the `mador_faq_*` transients that cache the questions and answers.
+ * - the `mador_faq_*` transients that cache the questions and answers;
+ * - since 1.2.0, the connection (`mador_sito`, with the site's key pair),
+ *   the list of deleted pages still to report and the hourly event.
+ *
+ * The pages and posts the plugin published are NOT removed: they belong
+ * to the site owner. Only the plugin's bookkeeping goes.
  *
  * On multisite the option and the transients live per site, and
  * `uninstall.php` runs once, so every site is visited here.
@@ -25,6 +30,9 @@ function mador_uninstall_site() {
 	global $wpdb;
 
 	delete_option( 'mador_opzioni' );
+	delete_option( 'mador_sito' );
+	delete_option( 'mador_assenti' );
+	wp_clear_scheduled_hook( 'mador_giro' );
 
 	// A direct query because there is no API to list transients by prefix;
 	// the rows are then deleted through the API, and nothing is cached

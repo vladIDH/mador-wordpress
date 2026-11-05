@@ -174,6 +174,8 @@ function mador_pagina_impostazioni(): void {
 
 	mador_riquadro_stato( $codice, $lingua );
 
+	mador_riquadro_pubblica();
+
 	echo '</div>';
 }
 

@@ -4,7 +4,7 @@ Tags: ai, faq, structured data, verification, badge
 Requires at least: 6.0
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 1.1.1
+Stable tag: 1.2.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -14,14 +14,15 @@ Connects your site to Mador: site verification, your questions and answers with 
 
 [Mador](https://mador.ai) measures how often AI assistants (ChatGPT, Gemini, Perplexity, Claude and others) name a business when a customer asks, and writes the pages that help them name it. This plugin brings that work onto the business's own WordPress site.
 
-It does four things, and nothing else:
+It does five things, and nothing else:
 
 * **Site verification.** It adds `<meta name="mador-verifica">` to the head of every page, so Mador can confirm the site belongs to your account. Nothing to paste.
 * **Questions and answers.** `[mador-faq]` prints the questions and answers written for your business, with `FAQPage` structured data. They update on their own when you correct them in the Mador area.
 * **Badge.** `[mador-badge]` shows your latest measurement, linking to the certificate.
 * **Certificate.** `[mador-certificato]` embeds the full measurement certificate.
+* **Your pages, published here (Growth plan).** The pages Mador writes for your business can be published on this site as regular pages or posts, live or as drafts. Off until you connect the site with a one-time code from your Mador account. A page you edit in WordPress is never overwritten without your say, taking a page down puts it back to draft, and nothing is ever deleted.
 
-No API key, no account password, no tracking, no JavaScript, no stylesheets, no external libraries. The only setting that identifies anything is your report code, which is already public.
+No API key, no account password, no tracking, no JavaScript, no stylesheets, no external libraries. The only setting that identifies anything is your report code, which is already public. Publishing your pages uses a key pair created on your site: the secret half never leaves it, and every page Mador sends is checked against Mador's signature before it is saved.
 
 The plugin adds no links to your public pages on its own. The badge and the certificate appear only where you place their shortcodes. The "Measured and written with Mador" credit link under the questions and answers is off until you turn it on in **Settings → Mador**.
 
@@ -93,11 +94,18 @@ This plugin connects to Mador (https://mador.ai), the service it belongs to and 
 * **Badge** (`[mador-badge]`) and **certificate** (`[mador-certificato]`): on the pages where you place them, the visitor's browser loads the image `https://mador.ai/r/{report code}/badge.svg` and the page `https://mador.ai/r/{report code}/certificato` (in an iframe). Like any image or embedded page, this sends the visitor's IP address, browser details and the address of the page to mador.ai.
 * **Settings page**: **Settings → Mador** shows your real badge, so the administrator's browser loads `https://mador.ai/r/{report code}/badge.svg` while that page is open, with the same details as above.
 * **Verification**: the meta tag is read by Mador when you press the verify button in the Mador area; the plugin itself sends nothing.
+* **Publishing your pages** (only after you connect the site in **Settings → Mador** with a one-time code): at connection, your server sends `https://mador.ai/api/wp/collega` the code, a public key generated on your site, your site address and the plugin version. Then, once an hour and when you press "Check now", your server sends `https://mador.ai/api/wp/sincronizza` a signed request with, for each page the plugin published, its id, version, WordPress status, address and whether it was edited; the answer contains the pages to publish, update or take down. Mador may also call `/wp-json/mador/v1/campanello` on your site, with no content, to bring the next check forward. Mador also reads each published page, like a visitor, after it goes online and then once a week, to confirm it is still there. No visitor data is sent. Disconnecting stops all of this.
 
 Mador terms of service: https://mador.ai/en/termini
 Mador privacy policy: https://mador.ai/en/privacy
 
 == Changelog ==
+
+= 1.2.0 =
+* With the Growth plan, the pages Mador writes can be published on your site as pages or posts, live or as drafts. Off until you connect the site with a one-time code from your Mador account.
+* Signed exchange with Mador: a key pair is created on your site and Mador only holds the public half; every page Mador sends is checked against Mador's signature.
+* Pages you edit in WordPress are never overwritten without your choice in the Mador account; taking a page down puts it back to draft; uninstalling leaves every page in place.
+* `<meta name="mador-pagina">` and the page's structured data in the head of the pages the plugin published.
 
 = 1.1.1 =
 * Translations now come only from translate.wordpress.org: the plugin no longer ships its own `languages/` folder.
@@ -111,6 +119,9 @@ Mador privacy policy: https://mador.ai/en/privacy
 * First public release: site verification tag, `[mador-faq]` with FAQPage structured data, `[mador-badge]`, `[mador-certificato]`, settings page in English, Italian and Spanish, full cleanup on uninstall.
 
 == Upgrade Notice ==
+
+= 1.2.0 =
+Adds publishing of your Mador pages on this site (Growth plan). Nothing changes until you connect the site in Settings → Mador.
 
 = 1.1.0 =
 The credit link under the questions and answers is now off by default. Turn it on under Settings → Mador if you want to keep it.
