@@ -105,6 +105,7 @@ Mador privacy policy: https://mador.ai/en/privacy
 * With the Growth plan, the pages Mador writes can be published on your site as pages or posts, live or as drafts. Off until you connect the site with a one-time code from your Mador account.
 * Signed exchange with Mador: a key pair is created on your site and Mador only holds the public half; every page Mador sends is checked against Mador's signature.
 * Pages you edit in WordPress are never overwritten without your choice in the Mador account; taking a page down puts it back to draft; uninstalling leaves every page in place.
+* Posts published by Mador arrive with comments closed; you can open them in WordPress. Pages keep your site's setting.
 * `<meta name="mador-pagina">` and the page's structured data in the head of the pages the plugin published.
 
 = 1.1.1 =

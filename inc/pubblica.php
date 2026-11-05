@@ -373,16 +373,21 @@ function mador_applica( array $c, int $utente ): void {
 	}
 
 	if ( 'crea' === $cosa ) {
-		$nuovo = wp_insert_post(
-			array(
-				'post_type'    => $tipo,
-				'post_status'  => $stato,
-				'post_title'   => $titolo,
-				'post_content' => $contenuto,
-				'post_author'  => $utente,
-			),
-			true
+		$nuovo_post = array(
+			'post_type'    => $tipo,
+			'post_status'  => $stato,
+			'post_title'   => $titolo,
+			'post_content' => $contenuto,
+			'post_author'  => $utente,
 		);
+		// A post written by Mador answers one question: it arrives with
+		// comments and pings closed. The owner can open them in WordPress,
+		// and later updates never touch them. Pages keep the site's default.
+		if ( 'post' === $tipo ) {
+			$nuovo_post['comment_status'] = 'closed';
+			$nuovo_post['ping_status']    = 'closed';
+		}
+		$nuovo = wp_insert_post( $nuovo_post, true );
 		if ( is_wp_error( $nuovo ) ) {
 			return;
 		}

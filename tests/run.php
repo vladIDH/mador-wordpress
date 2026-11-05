@@ -113,6 +113,24 @@ $crea = array(
 );
 
 prova(
+	'commenti: un articolo arriva coi commenti chiusi, una pagina resta come la vuole il sito',
+	function () use ( $crea ) {
+		mador_applica( $crea, 1 );
+		$pagina = $GLOBALS['finto']['post'][1];
+		vero( ! isset( $pagina->comment_status ), 'pagina: nessuna scelta sui commenti' );
+		vero( ! isset( $pagina->ping_status ), 'pagina: nessuna scelta sui ping' );
+		$articolo              = $crea;
+		$articolo['id']        = 'bbbbbbbb-bbbb-cccc-dddd-eeeeeeeeeeee';
+		$articolo['tipo_post'] = 'post';
+		mador_applica( $articolo, 1 );
+		$post = $GLOBALS['finto']['post'][2];
+		uguale( 'post', $post->post_type );
+		uguale( 'closed', $post->comment_status );
+		uguale( 'closed', $post->ping_status );
+	}
+);
+
+prova(
 	'crea: pagina pubblicata, ripulita, con id, versione, impronta e schema',
 	function () use ( $crea ) {
 		mador_applica( $crea, 7 );

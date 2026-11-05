@@ -116,6 +116,12 @@ function wp_insert_post( $d ) {
 	$p->post_title   = $d['post_title'];
 	$p->post_content = $d['post_content'];
 	$p->post_author  = $d['post_author'];
+	// Every other field passed (comment_status, ping_status, ...) is kept as is.
+	foreach ( $d as $k => $v ) {
+		if ( ! isset( $p->$k ) ) {
+			$p->$k = $v;
+		}
+	}
 	$GLOBALS['finto']['post'][ $p->ID ] = $p;
 	return $p->ID;
 }
