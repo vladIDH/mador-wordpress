@@ -30,7 +30,7 @@ function mador_riquadro_pubblica(): void {
 			'host-diverso'    => array( 'error', __( 'This site is not the one listed in your Mador account.', 'mador' ) ),
 			'senza-sito'      => array( 'error', __( 'Your Mador account has no website listed yet. Add it there, then try again.', 'mador' ) ),
 			'piano'           => array( 'error', __( 'Publishing on your site is part of the Growth plan.', 'mador' ) ),
-			'non-autorizzato' => array( 'error', __( 'Mador no longer recognises this site. Disconnect and connect again with a new code.', 'mador' ) ),
+			'non-autorizzato' => array( 'error', __( 'Mador no longer recognizes this site. Disconnect and connect again with a new code.', 'mador' ) ),
 			'firma'           => array( 'error', __( 'The answer did not come from Mador and was ignored.', 'mador' ) ),
 		);
 		$m        = isset( $messaggi[ $esito ] ) ? $messaggi[ $esito ] : array( 'warning', __( 'Mador could not be reached. The plugin will try again within the hour.', 'mador' ) );

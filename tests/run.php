@@ -278,5 +278,24 @@ prova(
 	}
 );
 
+prova(
+	'sodium_memzero solo con l\'estensione nativa (sodium_compat la fa cadere)',
+	function () {
+		$viste = 0;
+		foreach ( glob( dirname( __DIR__ ) . '/inc/*.php' ) as $file ) {
+			$righe = file( $file );
+			foreach ( $righe as $n => $riga ) {
+				if ( false === strpos( $riga, 'sodium_memzero(' ) ) {
+					continue;
+				}
+				++$viste;
+				$prima = implode( '', array_slice( $righe, max( 0, $n - 3 ), 3 ) );
+				uguale( true, false !== strpos( $prima, "extension_loaded( 'sodium' )" ), basename( $file ) . ':' . ( $n + 1 ) . ' senza extension_loaded' );
+			}
+		}
+		uguale( true, $viste > 0, 'nessuna sodium_memzero trovata: il test non guarda piu\' niente' );
+	}
+);
+
 echo "\n$passate passate, $fallite fallite\n";
 exit( $fallite > 0 ? 1 : 0 );

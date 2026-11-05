@@ -105,7 +105,10 @@ function mador_collega( string $codice ) {
 		),
 		false
 	);
-	if ( function_exists( 'sodium_memzero' ) ) {
+	// Only the native extension can wipe memory: the sodium_compat copy that
+	// WordPress ships throws a SodiumException here, which used to end the
+	// connection with a critical error right after it was saved.
+	if ( extension_loaded( 'sodium' ) ) {
 		sodium_memzero( $segreta );
 	}
 	mador_pianifica();
