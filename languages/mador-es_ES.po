@@ -1,7 +1,7 @@
 # Mador — español.
 msgid ""
 msgstr ""
-"Project-Id-Version: Mador 1.1.0\n"
+"Project-Id-Version: Mador 1.2.0\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -90,5 +90,63 @@ msgstr "Pega esto en la página que debe llevar tus preguntas y respuestas:"
 msgid "It shows nothing until the article is published on Mador and the questions and answers are written. Then it appears on its own."
 msgstr "No muestra nada hasta que el artículo esté publicado en Mador y las preguntas y respuestas estén escritas. Después aparece solo."
 
-msgid "Connects your WordPress site to Mador: the site verification tag, your questions and answers with FAQ structured data, the measurement badge and the certificate."
-msgstr "Conecta tu sitio WordPress a Mador: la etiqueta de verificación del sitio, tus preguntas y respuestas con datos estructurados FAQ, el distintivo de la medición y el certificado."
+msgid "Connects your WordPress site to Mador: the site verification tag, your questions and answers with FAQ structured data, the measurement badge, the certificate and, with the Growth plan, the pages Mador writes for you."
+msgstr "Conecta tu sitio WordPress a Mador: la etiqueta de verificación del sitio, tus preguntas y respuestas con datos estructurados FAQ, el distintivo de la medición, el certificado y, con el plan Growth, las páginas que Mador escribe para ti."
+
+msgid "Publish Mador pages on this site"
+msgstr "Publicar en este sitio las páginas de Mador"
+
+msgid "With the Growth plan, the pages Mador writes for your business can also be published here, as your own pages. Nothing is published until you connect the site, and you choose in your Mador account which pages go out."
+msgstr "Con el plan Growth, las páginas que Mador escribe para tu negocio también pueden salir aquí, como páginas tuyas. No se publica nada hasta que conectes el sitio, y en tu cuenta de Mador eliges qué páginas salen."
+
+msgid "Connected. Mador pages will appear here within the hour."
+msgstr "Conectado. Las páginas de Mador aparecerán aquí en menos de una hora."
+
+msgid "Disconnected. The pages already published stay on your site."
+msgstr "Desconectado. Las páginas ya publicadas se quedan en tu sitio."
+
+msgid "Checked: everything is up to date."
+msgstr "Comprobado: todo está al día."
+
+msgid "That code is not valid or has expired. Get a new one from your Mador account: it lasts 15 minutes and works once."
+msgstr "Ese código no es válido o ha caducado. Pide uno nuevo en tu cuenta de Mador: dura 15 minutos y solo sirve una vez."
+
+msgid "This site is not the one listed in your Mador account."
+msgstr "Este sitio no es el que figura en tu cuenta de Mador."
+
+msgid "Your Mador account has no website listed yet. Add it there, then try again."
+msgstr "Tu cuenta de Mador todavía no tiene ningún sitio. Añádelo allí y vuelve a intentarlo."
+
+msgid "Publishing on your site is part of the Growth plan."
+msgstr "Publicar en tu sitio está incluido en el plan Growth."
+
+msgid "Mador no longer recognizes this site. Disconnect and connect again with a new code."
+msgstr "Mador ya no reconoce este sitio. Desconéctalo y vuelve a conectarlo con un código nuevo."
+
+msgid "The answer did not come from Mador and was ignored."
+msgstr "La respuesta no venía de Mador y se ha ignorado."
+
+msgid "Mador could not be reached. The plugin will try again within the hour."
+msgstr "No se ha podido contactar con Mador. El plugin lo volverá a intentar en menos de una hora."
+
+msgid "Connection code from your Mador account"
+msgstr "Código de conexión de tu cuenta de Mador"
+
+msgid "Connect"
+msgstr "Conectar"
+
+#. translators: %s: date and time of the last check.
+msgid "Connected. Last check with Mador: %s."
+msgstr "Conectado. Última comprobación con Mador: %s."
+
+msgid "Connected. No check with Mador yet."
+msgstr "Conectado. Todavía no hay ninguna comprobación con Mador."
+
+msgid "Check now"
+msgstr "Comprobar ahora"
+
+msgid "Disconnect"
+msgstr "Desconectar"
+
+msgid "Disconnecting leaves every published page on your site."
+msgstr "Al desconectar, todas las páginas publicadas se quedan en tu sitio."

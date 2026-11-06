@@ -3,7 +3,7 @@
 # This file is distributed under the GPL-2.0-or-later license.
 msgid ""
 msgstr ""
-"Project-Id-Version: Mador 1.1.0\n"
+"Project-Id-Version: Mador 1.2.0\n"
 "Report-Msgid-Bugs-To: https://mador.ai\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -119,5 +119,82 @@ msgid "It shows nothing until the article is published on Mador and the question
 msgstr ""
 
 #. Plugin description (header of mador.php)
-msgid "Connects your WordPress site to Mador: the site verification tag, your questions and answers with FAQ structured data, the measurement badge and the certificate."
+msgid "Connects your WordPress site to Mador: the site verification tag, your questions and answers with FAQ structured data, the measurement badge, the certificate and, with the Growth plan, the pages Mador writes for you."
+msgstr ""
+
+#: inc/pubblica-admin.php
+msgid "Publish Mador pages on this site"
+msgstr ""
+
+#: inc/pubblica-admin.php
+msgid "With the Growth plan, the pages Mador writes for your business can also be published here, as your own pages. Nothing is published until you connect the site, and you choose in your Mador account which pages go out."
+msgstr ""
+
+#: inc/pubblica-admin.php
+msgid "Connected. Mador pages will appear here within the hour."
+msgstr ""
+
+#: inc/pubblica-admin.php
+msgid "Disconnected. The pages already published stay on your site."
+msgstr ""
+
+#: inc/pubblica-admin.php
+msgid "Checked: everything is up to date."
+msgstr ""
+
+#: inc/pubblica-admin.php
+msgid "That code is not valid or has expired. Get a new one from your Mador account: it lasts 15 minutes and works once."
+msgstr ""
+
+#: inc/pubblica-admin.php
+msgid "This site is not the one listed in your Mador account."
+msgstr ""
+
+#: inc/pubblica-admin.php
+msgid "Your Mador account has no website listed yet. Add it there, then try again."
+msgstr ""
+
+#: inc/pubblica-admin.php
+msgid "Publishing on your site is part of the Growth plan."
+msgstr ""
+
+#: inc/pubblica-admin.php
+msgid "Mador no longer recognizes this site. Disconnect and connect again with a new code."
+msgstr ""
+
+#: inc/pubblica-admin.php
+msgid "The answer did not come from Mador and was ignored."
+msgstr ""
+
+#: inc/pubblica-admin.php
+msgid "Mador could not be reached. The plugin will try again within the hour."
+msgstr ""
+
+#: inc/pubblica-admin.php
+msgid "Connection code from your Mador account"
+msgstr ""
+
+#: inc/pubblica-admin.php
+msgid "Connect"
+msgstr ""
+
+#: inc/pubblica-admin.php
+#. translators: %s: date and time of the last check.
+msgid "Connected. Last check with Mador: %s."
+msgstr ""
+
+#: inc/pubblica-admin.php
+msgid "Connected. No check with Mador yet."
+msgstr ""
+
+#: inc/pubblica-admin.php
+msgid "Check now"
+msgstr ""
+
+#: inc/pubblica-admin.php
+msgid "Disconnect"
+msgstr ""
+
+#: inc/pubblica-admin.php
+msgid "Disconnecting leaves every published page on your site."
 msgstr ""

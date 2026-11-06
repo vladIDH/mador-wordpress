@@ -1,7 +1,7 @@
 # Mador — italiano.
 msgid ""
 msgstr ""
-"Project-Id-Version: Mador 1.1.0\n"
+"Project-Id-Version: Mador 1.2.0\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -90,5 +90,63 @@ msgstr "Incolla questo nella pagina che deve portare le tue domande e risposte:"
 msgid "It shows nothing until the article is published on Mador and the questions and answers are written. Then it appears on its own."
 msgstr "Non mostra niente finché l'articolo non è pubblicato su Mador e le domande e risposte non sono scritte. Poi compare da solo."
 
-msgid "Connects your WordPress site to Mador: the site verification tag, your questions and answers with FAQ structured data, the measurement badge and the certificate."
-msgstr "Collega il tuo sito WordPress a Mador: il tag di verifica del sito, le tue domande e risposte con i dati strutturati FAQ, il badge della misura e il certificato."
+msgid "Connects your WordPress site to Mador: the site verification tag, your questions and answers with FAQ structured data, the measurement badge, the certificate and, with the Growth plan, the pages Mador writes for you."
+msgstr "Collega il tuo sito WordPress a Mador: il tag di verifica del sito, le tue domande e risposte con i dati strutturati FAQ, il badge della misura, il certificato e, col piano Growth, le pagine che Mador scrive per te."
+
+msgid "Publish Mador pages on this site"
+msgstr "Pubblica su questo sito le pagine di Mador"
+
+msgid "With the Growth plan, the pages Mador writes for your business can also be published here, as your own pages. Nothing is published until you connect the site, and you choose in your Mador account which pages go out."
+msgstr "Col piano Growth le pagine che Mador scrive per la tua attività possono uscire anche qui, come pagine tue. Non esce niente finché non colleghi il sito, e quali pagine pubblicare lo scegli nel tuo account Mador."
+
+msgid "Connected. Mador pages will appear here within the hour."
+msgstr "Collegato. Le pagine di Mador compaiono qui entro un'ora."
+
+msgid "Disconnected. The pages already published stay on your site."
+msgstr "Scollegato. Le pagine già pubblicate restano sul tuo sito."
+
+msgid "Checked: everything is up to date."
+msgstr "Controllato: è tutto aggiornato."
+
+msgid "That code is not valid or has expired. Get a new one from your Mador account: it lasts 15 minutes and works once."
+msgstr "Questo codice non è valido o è scaduto. Prendine uno nuovo dal tuo account Mador: dura 15 minuti e vale una volta sola."
+
+msgid "This site is not the one listed in your Mador account."
+msgstr "Questo sito non è quello indicato nel tuo account Mador."
+
+msgid "Your Mador account has no website listed yet. Add it there, then try again."
+msgstr "Nel tuo account Mador non c'è ancora un sito. Aggiungilo lì e poi riprova."
+
+msgid "Publishing on your site is part of the Growth plan."
+msgstr "Pubblicare sul tuo sito è compreso nel piano Growth."
+
+msgid "Mador no longer recognizes this site. Disconnect and connect again with a new code."
+msgstr "Mador non riconosce più questo sito. Scollegalo e ricollegalo con un codice nuovo."
+
+msgid "The answer did not come from Mador and was ignored."
+msgstr "La risposta non veniva da Mador ed è stata ignorata."
+
+msgid "Mador could not be reached. The plugin will try again within the hour."
+msgstr "Mador non ha risposto. Il plugin riprova entro un'ora."
+
+msgid "Connection code from your Mador account"
+msgstr "Codice di collegamento dal tuo account Mador"
+
+msgid "Connect"
+msgstr "Collega"
+
+#. translators: %s: date and time of the last check.
+msgid "Connected. Last check with Mador: %s."
+msgstr "Collegato. Ultimo controllo con Mador: %s."
+
+msgid "Connected. No check with Mador yet."
+msgstr "Collegato. Nessun controllo con Mador per ora."
+
+msgid "Check now"
+msgstr "Controlla ora"
+
+msgid "Disconnect"
+msgstr "Scollega"
+
+msgid "Disconnecting leaves every published page on your site."
+msgstr "Scollegando, ogni pagina pubblicata resta sul tuo sito."
