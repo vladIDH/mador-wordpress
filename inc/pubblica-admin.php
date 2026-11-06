@@ -26,7 +26,7 @@ function mador_riquadro_pubblica(): void {
 			'collegato'       => array( 'success', __( 'Connected. Mador pages will appear here within the hour.', 'mador' ) ),
 			'scollegato'      => array( 'success', __( 'Disconnected. The pages already published stay on your site.', 'mador' ) ),
 			'ok'              => array( 'success', __( 'Checked: everything is up to date.', 'mador' ) ),
-			'codice'          => array( 'error', __( 'That code is not valid or has expired. Ask your Mador account for a new one: it lasts 15 minutes and works once.', 'mador' ) ),
+			'codice'          => array( 'error', __( 'That code is not valid or has expired. Get a new one from your Mador account: it lasts 15 minutes and works once.', 'mador' ) ),
 			'host-diverso'    => array( 'error', __( 'This site is not the one listed in your Mador account.', 'mador' ) ),
 			'senza-sito'      => array( 'error', __( 'Your Mador account has no website listed yet. Add it there, then try again.', 'mador' ) ),
 			'piano'           => array( 'error', __( 'Publishing on your site is part of the Growth plan.', 'mador' ) ),
